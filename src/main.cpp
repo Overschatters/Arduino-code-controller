@@ -1,27 +1,27 @@
 #include <Arduino.h>
 #include "RF24.h"			// Comm module library
 
-typedef byte pin;			// Define pin data type as byte for better readability
+typedef uint8_t pin;			// Define pin data type as byte for better readability
 
 // Pins
-const pin speedJoy = A0;	// Pin of the joystick that controls speed
-const pin steeringJoy = A1;	// Pin of the joystick that controls the steering
+const pin speedJoy = A1;	// Pin of the joystick that controls speed
+const pin steeringJoy = A2;	// Pin of the joystick that controls the steering
 const pin forward = 2;		// Pin that reads if the switch is in the forward position
 const pin backward = 3;		// Pin that reads if the switch is in the backward position
 
 // Structs that holds the data of the single package that the controller sends
 struct Package {
-	u8 direction = 0;		// Byte that holds the value of the direction switch
-	u16 speed = 0;			// Byte that holds the value of the speed joystick passthrough
-	u16 steering = 0;		// Byte that holds the value of the steering joystick.
+	uint8_t flipSwitch = 0;		// Byte that holds the value of the direction switch
+	uint16_t speed = 0;			// Byte that holds the value of the speed joystick passthrough
+	uint16_t steering = 0;		// Byte that holds the value of the steering joystick.
 };
 Package package; 			// Structs that holds the data of the single package that the controller sends
 
-u8 pynqReading;				// Byte that holds the (RAW!!!!!) speed reading from the pynq board
+uint8_t pynqReading;				// Byte that holds the (RAW!!!!!) speed reading from the pynq board
 
 // Wireless comm
 RF24 radio(9, 10);  // using pin 9 for the CE pin, and pin 10 for the CSN pin
-const byte addresses[][6] = {"1Node", "2Node"};	// Define addresses as a byte
+const uint8_t addresses[][6] = {"1Node", "2Node"};	// Define addresses as a byte
 
 void setup() {
 // Open transmission pipes
