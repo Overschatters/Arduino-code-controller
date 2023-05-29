@@ -14,6 +14,7 @@ struct Package {
 	uint8_t flipSwitch = 0;		// Byte that holds the value of the direction switch
 	uint16_t speed = 0;			// Byte that holds the value of the speed joystick passthrough
 	uint16_t steering = 0;		// Byte that holds the value of the steering joystick.
+	bool inRange = true;		// Boolean for checking if the controller is still in range
 };
 Package package; 			// Structs that holds the data of the single package that the controller sends
 
@@ -35,13 +36,13 @@ package.speed = analogRead(speedJoy);
 package.steering = analogRead(steeringJoy);
 
 if (digitalRead(forward)) {
-	package.direction = 1;
+	package.flipSwitch = 1;
 }
 else if (digitalRead(backward)) {
-	package.direction = 2;
+	package.flipSwitch = 2;
 }
 else {
-	package.direction = 0;
+	package.flipSwitch = 0;
 }
 
 // Send package data
